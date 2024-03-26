@@ -1,0 +1,18 @@
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "lib/foundry-chainlink-toolkit"]
+	path = lib/foundry-chainlink-toolkit
+	url = https://github.com/smartcontractkit/foundry-chainlink-toolkit
+[submodule "lib/forge-std"]
+	path = lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "TokenSwap/lib/openzeppelin-contracts"]
+	path = TokenSwap/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "TokenSwap/lib/foundry-chainlink-toolkit"]
+	path = TokenSwap/lib/foundry-chainlink-toolkit
+	url = https://github.com/smartcontractkit/foundry-chainlink-toolkit
+[submodule "TokenSwap/lib/forge-std"]
+	path = TokenSwap/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
