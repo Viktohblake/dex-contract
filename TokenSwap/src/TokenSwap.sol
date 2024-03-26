@@ -2,13 +2,13 @@
 pragma solidity ^0.8.13;
 
 import {AggregatorV3Interface} from "@chainlink/contracts/v0.8/interfaces/AggregatorV3Interface.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {console2} from "forge-std/Test.sol";
+import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
+import {console2} from "forge-std/Test.sol"; 
 
 contract TokenSwap {
     address ETHUSDAddress = 0x694AA1769357215DE4FAC081bf1f309aDC325306;
     address LINKUSDAddress = 0xc59E3633BAAC79493d908e63626716e204A45EdF;
-    address DIAUSD = 0x14866185B1962B63C3Ea9E03Bc1da838bab34C19;
+    address DAIUSD = 0x14866185B1962B63C3Ea9E03Bc1da838bab34C19;
     AggregatorV3Interface internal dataFeed;
 
     // contract address
@@ -17,7 +17,7 @@ contract TokenSwap {
 
     mapping(address => uint256) public LINKDeposit;
 
-    mapping(address => uint256) public DIADeposit;
+    mapping(address => uint256) public DAIDeposit;
 
     int public pairResult;
 
@@ -42,9 +42,9 @@ contract TokenSwap {
         return answer;
     }
 
-    function AddLiquidity(uint256 _amountDia, uint256 _amountLink) external {
+    function AddLiquidity(uint256 _amountDAI, uint256 _amountLink) external {
         require(
-            IERC20(DAI).transferFrom(msg.sender, address(this), _amountDia),
+            IERC20(DAI).transferFrom(msg.sender, address(this), _amountDAI),
             "Deposit Faild for TokenA"
         );
         require(
@@ -52,7 +52,7 @@ contract TokenSwap {
             "Deposit Failed for TokenB"
         );
         LINKDeposit[LINK] = LINKDeposit[LINK] + _amountLink;
-        DIADeposit[DAI] = DIADeposit[DAI] + _amountDia;
+        DAIDeposit[DAI] = DAIDeposit[DAI] + _amountDAI;
     }
 
     // function ViewApproval() external view returns (uint256) {
@@ -83,10 +83,10 @@ contract TokenSwap {
         // uint256 amountOutDivid = amountOut / 100;
         // console2.log("Raw result from Chainlink :", result);
         // console2.log("Amount after calculation with swap amount", amountOut);
-        // console2.log("Current Dia Liquidity: ", DIADeposit);
+        // console2.log("Current DAI Liquidity: ", DAIDeposit);
         // console2.log("Checking Amount After Calculation", amountOutDivid);
 
-        // DIADeposit = DIADeposit - amountOutDivid;
+        // DAIDeposit = DAIDeposit - amountOutDivid;
 
         AggregatorV3Interface tokenPriceFeed = AggregatorV3Interface(_base);
         (, int tokenPrice, , , ) = tokenPriceFeed.latestRoundData();
@@ -96,7 +96,7 @@ contract TokenSwap {
 
         emit TokenSwapForETH(address(this), msg.sender, ethAmount);
 
-        DIADeposit[_base] = DIADeposit[_base] - ethAmount;
+        DAIDeposit[_base] = DAIDeposit[_base] - ethAmount;
 
         // payable(msg.sender).transfer(ethAmount);
     }
@@ -129,7 +129,7 @@ contract TokenSwap {
         );
 
         // Transfer tokens from the caller to this contract
-        DIADeposit[tokenIn] = DIADeposit[tokenIn] + amountIn;
+        DAIDeposit[tokenIn] = DAIDeposit[tokenIn] + amountIn;
         LINKDeposit[tokenOut] = LINKDeposit[tokenOut] - amountOut;
 
         // Transfer tokensOut to the caller
